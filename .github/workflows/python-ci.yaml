@@ -72,5 +72,5 @@ jobs:
 
       # Step 12
       - name: Push unik sha tag to Docker hub
-        run: docker push ayhantefik/python-unit-testing-demo:${{ steps.image_tag.outputs.tag }}
+        run: docker push ${{ steps.image_tag.outputs.tag && format('-t ayhantefik/python-unit-testing-demo:{0}', steps.image_tag.outputs.tag) }}
 
