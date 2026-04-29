@@ -56,7 +56,7 @@ jobs:
 
       # Step 9
       - name: Log in to Docker hub
-        run: echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login -u ayhantefik --password-stdin
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ayhantefik --password-stdin
 
       # Step 10
       - name: Build Docker image
