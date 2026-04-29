@@ -34,19 +34,19 @@ class TestUserService(unittest.TestCase):
         self.service = UserService(self.repository)
 
 
-    # def test_register_user_saves_user(self):
-    #     user = self.service.register_user("Yahya", "yahya@hotmail.com")
+    def test_register_user_saves_user(self):
+        user = self.service.register_user("Yahya", "yahya@hotmail.com")
 
-    #     self.assertEqual(user.id, 1)
-    #     self.assertEqual(user.username, "Yahya")
-    #     self.assertEqual(user.email, "yahya@hotmail.com")
-    #     self.assertTrue(user.active)
+        self.assertEqual(user.id, 1)
+        self.assertEqual(user.username, "Yahya")
+        self.assertEqual(user.email, "yahya@hotmail.com")
+        self.assertTrue(user.active)
 
 
 
-    # def test_register_user_strips_username_and_lowercases_email(self):
-    #     user = self.service.register_user("Yahya", "YAHYA@HOTMAIL.COM")
+    def test_register_user_strips_username_and_lowercases_email(self):
+        user = self.service.register_user("Yahya", "YAHYA@HOTMAIL.COM")
 
-    #     self.assertEqual(user.username, "Yahya")
+        self.assertEqual(user.username, "Yahya")
         
 
