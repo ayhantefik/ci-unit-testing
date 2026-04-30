@@ -10,17 +10,19 @@ on:
        - main
 
 jobs:
-  test-and-docker:        
+  test-and-docker:
     name: tests, build and push Docker image
 
     runs-on: ubuntu-latest
 
     steps:
       # Step 1 clone our repo
+
       - name: Checkout repository
         uses: actions/checkout@v4
           
       # Step 2 pick and install python
+
       - name: Set up python
         uses: actions/setup-python@v5
         with:
@@ -38,6 +40,7 @@ jobs:
       - name: install dependencies
         run: python -m pip install -r requirements.txt  
 
+
       # Step 6
       - name: Run unittests tests
         run: python -m unittest discover -v
@@ -47,26 +50,30 @@ jobs:
         run: python -m pytest -v
 
       # Step 8
-      # dckr_pat_FYIsIeDkoY8GICbZUH02h5y5d7o
-      - name: Create sha-256 image tag
+      - name: Create SHA-256 image tag
         id: image_tag
-        run:  |
-          IMAGE_TAG=$(echo "${{ github.sha }}-${{ github.run_id }}" | sha256sum | cut -d "" -f 1)
+        run: |
+          IMAGE_TAG=$(echo "${{ github.sha }}-${{ github.run_id }}" | sha256sum | cut -d " " -f 1)
           echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+        
       # Step 9
       - name: Log in to Docker hub
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ayhantefik --password-stdin
+        run: echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login -u yahyasystementor --password-stdin
 
-      # Step 10
+      # Step 10  
       - name: Build Docker Image
-        run: docker build -t ayhantefik/python-unit-testing-demo:latest .
+        run: docker build -t yahyasystementor/python-unit-testing-demo:latest .
+            
 
+      - name: Build Docker Image with unique sha
+        run: docker build -t yahyasystementor/python-unit-testing-demo:${{steps.image_tag.outputs.tag}} .
+      
       # Step 11
       - name: Push latest tag to Docker hub
-        run: docker push ayhantefik/python-unit-testing-demo:latest
+        run: docker push yahyasystementor/python-unit-testing-demo:latest
 
       # Step 12
+      
       - name: Push unik sha tag to Docker hub
-        run: docker push ayhantefik/python-unit-testing-demo:${{steps.image_tag.outputs.tag}}
-
+        run: docker push yahyasystementor/python-unit-testing-demo:${{steps.image_tag.outputs.tag}}
